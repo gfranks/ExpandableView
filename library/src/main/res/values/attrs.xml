@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExpandableView">
+        <attr name="isCollapsed" format="boolean" />
+        <attr name="collapseOnContentClick" format="boolean" />
+        <attr name="animationDuration" format="integer" />
+        <attr name="headerLayout" format="reference" />
+        <attr name="contentLayout" format="reference" />
+        <attr name="footerLayout" format="reference" />
+        <attr name="disableExpandCollapseOnClick" format="boolean" />
+        <attr name="addGradientOverlayWhenCollapsed" format="boolean" />
+        <attr name="gradientOverlayColor" format="color|reference" />
+        <attr name="collapsedContentHeight" format="dimension" />
+        <attr name="hasRoundedCorners" format="boolean" />
+    </declare-styleable>
+</resources>
