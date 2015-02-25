@@ -4,6 +4,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_header_2"
     android:padding="10dp"
-    android:textStyle="bold"
+    android:text="@string/expandable_view_header_text_2"
     android:textColor="@color/theme_white"
-    android:text="@string/expandable_view_header_text_2" />
+    android:textStyle="bold" />

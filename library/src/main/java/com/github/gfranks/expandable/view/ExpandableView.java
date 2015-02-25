@@ -60,19 +60,21 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
      * Header View
      */
     private View mHeaderView;
+    private int mHeaderViewResId;
     /**
      * Content View (view to be expanded or collapsed)
      */
     private View mContentView;
+    private int mContentViewResId;
     /**
      * Footer View
      */
     private View mFooterView;
+    private int mFooterViewResId;
     /**
      * Listener for ExpandableView expand/collapse callbacks
      */
     private ExpandableViewListener mListener;
-    private boolean mIsInflated;
     private Animator.AnimatorListener mExpandAnimationListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
@@ -125,6 +127,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         public void onAnimationRepeat(Animator animation) {
         }
     };
+    private boolean mIsInflated;
 
     public ExpandableView(Context context) {
         super(context);
@@ -148,26 +151,14 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         mIsCollapsed = a.getBoolean(R.styleable.ExpandableView_isCollapsed, false);
         mCollapseOnContentClick = a.getBoolean(R.styleable.ExpandableView_collapseOnContentClick, false);
         mAnimationDuration = a.getInt(R.styleable.ExpandableView_animationDuration, DEFAULT_ANIMATION_DURATION);
-        int headerLayoutResId = a.getResourceId(R.styleable.ExpandableView_headerLayout, -1);
-        int contentLayoutResId = a.getResourceId(R.styleable.ExpandableView_contentLayout, -1);
-        int footerLayoutResId = a.getResourceId(R.styleable.ExpandableView_footerLayout, -1);
+        mHeaderViewResId = a.getResourceId(R.styleable.ExpandableView_headerLayout, -1);
+        mContentViewResId = a.getResourceId(R.styleable.ExpandableView_contentLayout, -1);
+        mFooterViewResId = a.getResourceId(R.styleable.ExpandableView_footerLayout, -1);
         mDisableExpandCollapseOnClick = a.getBoolean(R.styleable.ExpandableView_disableExpandCollapseOnClick, false);
         mCollapsedContentHeight = a.getDimensionPixelSize(R.styleable.ExpandableView_collapsedContentHeight, 0);
         mAddGradientOverlayWhenCollapsed = a.getBoolean(R.styleable.ExpandableView_addGradientOverlayWhenCollapsed, false);
         mGradientOverlayColor = a.getColor(R.styleable.ExpandableView_gradientOverlayColor, Color.WHITE);
         a.recycle();
-
-        if (headerLayoutResId != -1) {
-            setHeaderView(headerLayoutResId);
-        }
-
-        if (contentLayoutResId != -1) {
-            setContentView(contentLayoutResId);
-        }
-
-        if (footerLayoutResId != -1) {
-            setFooterView(footerLayoutResId);
-        }
     }
 
     /**
@@ -320,7 +311,27 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
      * @see #setHeaderView(android.view.View)
      */
     public void setHeaderView(int headerLayoutResId) {
-        setHeaderView(inflate(getContext(), headerLayoutResId, null));
+        if (getHeaderView() != null) {
+            removeView(getHeaderView());
+        }
+        inflate(getContext(), headerLayoutResId, this);
+        if (getChildCount() > 1) {
+            View child = getChildAt(getChildCount()-1);
+            removeView(child);
+            addView(child, 0);
+        }
+    }
+
+    /**
+     * @param headerView header view to be added to the ExpandableView
+     */
+    public void setHeaderView(View headerView) {
+        if (getHeaderView() != null) {
+            removeView(getHeaderView());
+        }
+        addView(headerView, 0);
+        mHeaderView = headerView;
+        mHeaderView.setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
     }
 
     /**
@@ -333,23 +344,36 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
     }
 
     /**
-     * @param headerView header view to be added to the ExpandableView
-     */
-    public void setHeaderView(View headerView) {
-        if (getFooterView() != null) {
-            removeView(getFooterView());
-        }
-        addView(headerView, 0);
-        mHeaderView = headerView;
-        mHeaderView.setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
-    }
-
-    /**
      * @param contentLayoutResId layout resource id to be inflated as the content view
      * @see #setContentView(android.view.View)
      */
     public void setContentView(int contentLayoutResId) {
-        setContentView(inflate(getContext(), contentLayoutResId, null));
+        if (getContentView() != null) {
+            removeView(getContentView());
+        }
+        inflate(getContext(), contentLayoutResId, this);
+        if (getChildCount() > 2) {
+            View child = getChildAt(getChildCount()-1);
+            removeView(child);
+            addView(child, 1);
+        }
+    }
+
+    /**
+     * @param contentView content view to be added to the ExpandableView
+     * @throws java.lang.IllegalStateException if header has not been added
+     */
+    public void setContentView(View contentView) {
+        if (getContentView() != null) {
+            removeView(getContentView());
+        }
+        addView(contentView);
+        mContentView = contentView;
+        mContentView.setOnClickListener(this);
+
+        if (mIsInflated && mAddGradientOverlayWhenCollapsed) {
+            ensureGradientOverlayAdded();
+        }
     }
 
     /**
@@ -362,41 +386,16 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
     }
 
     /**
-     * @param contentView content view to be added to the ExpandableView
-     * @throws java.lang.IllegalStateException if header has not been added
-     */
-    public void setContentView(View contentView) {
-        ensureHeaderView();
-
-        if (getContentView() != null) {
-            removeView(getContentView());
-        }
-        addView(contentView, 1);
-        mContentView = contentView;
-        mContentView.setOnClickListener(this);
-
-        if (mIsInflated && mAddGradientOverlayWhenCollapsed) {
-            ensureGradientOverlayAdded();
-        }
-    }
-
-    /**
      * Setting a footer view is not required
      *
      * @param footerLayoutResId layout resource id to be inflated as the footer view
      * @see #setFooterView(android.view.View)
      */
     public void setFooterView(int footerLayoutResId) {
-        setFooterView(inflate(getContext(), footerLayoutResId, null));
-    }
-
-    /**
-     * @return the footer view
-     * @see #setFooterView(int)
-     * @see #setFooterView(android.view.View)
-     */
-    public View getFooterView() {
-        return mFooterView;
+        if (getFooterView() != null) {
+            removeView(getFooterView());
+        }
+        inflate(getContext(), footerLayoutResId, this);
     }
 
     /**
@@ -411,79 +410,13 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         mFooterView.setOnClickListener(this);
     }
 
-    @Override
-    public Parcelable onSaveInstanceState() {
-        Parcelable superState = super.onSaveInstanceState();
-        SavedState ss = new SavedState(superState);
-        ss.mIsCollapsed = mIsCollapsed;
-        return ss;
-    }
-
-    @Override
-    public void onRestoreInstanceState(Parcelable state) {
-        SavedState ss = (SavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
-        setExpanded(!ss.mIsCollapsed, false);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.v("GFGFGF", "Measured Height: " + getContentView().getMeasuredHeight());
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        if (getChildCount() > 3) {
-            throw new IllegalStateException("ExpandableView may only have 3 children (header + content + footer)");
-        }
-
-        mIsInflated = true;
-        if (getChildCount() > 0) {
-            if (getHeaderView() == null) {
-                mHeaderView = getChildAt(0);
-                mHeaderView.setOnClickListener(this);
-            }
-
-            if (getChildCount() > 1) {
-                if (getContentView() == null) {
-                    mContentView = getChildAt(1);
-                    mContentView.setOnClickListener(this);
-                }
-
-
-                if (getChildCount() > 2) {
-                    if (getFooterView() == null) {
-                        mFooterView = getChildAt(2);
-                        mFooterView.setOnClickListener(this);
-                    }
-                }
-            }
-        }
-
-        if (mAddGradientOverlayWhenCollapsed) {
-            ensureGradientOverlayAdded();
-        }
-
-        if (!isExpanded()) {
-            setExpanded(false, false);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (mDisableExpandCollapseOnClick) {
-            return;
-        }
-
-        if (v == getHeaderView() || v == getFooterView() || (v == getContentView() && mCollapseOnContentClick)) {
-            if (isExpanded()) {
-                collapseContent();
-            } else {
-                expandContent();
-            }
-        }
+    /**
+     * @return the footer view
+     * @see #setFooterView(int)
+     * @see #setFooterView(android.view.View)
+     */
+    public View getFooterView() {
+        return mFooterView;
     }
 
     /**
@@ -535,10 +468,86 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
             animator.start();
         }
     }
+    
+    @Override
+    public void onClick(View v) {
+        if (mDisableExpandCollapseOnClick) {
+            return;
+        }
 
-    private void ensureHeaderView() {
-        if (getHeaderView() == null || getChildCount() == 0) {
-            throw new IllegalStateException("Header view must be present before setting content");
+        if (v == getHeaderView() || v == getFooterView() || (v == getContentView() && mCollapseOnContentClick)) {
+            if (isExpanded()) {
+                collapseContent();
+            } else {
+                expandContent();
+            }
+        }
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState ss = new SavedState(superState);
+        ss.mIsCollapsed = mIsCollapsed;
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        setExpanded(!ss.mIsCollapsed, false);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+
+        if (mHeaderViewResId != -1) {
+            setHeaderView(mHeaderViewResId);
+        }
+
+        if (mContentViewResId != -1) {
+            setContentView(mContentViewResId);
+        }
+
+        if (mFooterViewResId != -1) {
+            setFooterView(mFooterViewResId);
+        }
+
+        if (getChildCount() > 3) {
+            throw new IllegalStateException("ExpandableView may only have 3 children (header + content + footer)");
+        }
+
+        mIsInflated = true;
+        if (getChildCount() > 0) {
+            if (getHeaderView() == null) {
+                mHeaderView = getChildAt(0);
+                mHeaderView.setOnClickListener(this);
+            }
+
+            if (getChildCount() > 1) {
+                if (getContentView() == null) {
+                    mContentView = getChildAt(1);
+                    mContentView.setOnClickListener(this);
+                }
+
+
+                if (getChildCount() > 2) {
+                    if (getFooterView() == null) {
+                        mFooterView = getChildAt(2);
+                        mFooterView.setOnClickListener(this);
+                    }
+                }
+            }
+        }
+
+        if (mAddGradientOverlayWhenCollapsed) {
+            ensureGradientOverlayAdded();
+        }
+
+        if (!isExpanded()) {
+            setExpanded(false, false);
         }
     }
 

@@ -23,7 +23,6 @@
                 android:id="@+id/expandable_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 app:headerLayout="@layout/layout_expandable_view_header"
                 app:contentLayout="@layout/layout_expandable_view_content"
                 app:footerLayout="@layout/layout_expandable_view_footer"
@@ -37,9 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical"
                 app:headerLayout="@layout/layout_expandable_view_header_2"
-                app:contentLayout="@layout/layout_expandable_view_content"
+                app:contentLayout="@layout/layout_expandable_view_content_2"
                 app:collapsedContentHeight="50dp"
                 app:addGradientOverlayWhenCollapsed="true"
                 app:gradientOverlayColor="@color/theme_white"
@@ -50,9 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical"
                 app:headerLayout="@layout/layout_expandable_view_header_3"
-                app:contentLayout="@layout/layout_expandable_view_content"
+                app:contentLayout="@layout/layout_expandable_view_content_3"
                 app:collapseOnContentClick="true"
                 app:animationDuration="200" />
 
@@ -61,10 +58,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical"
+                app:headerLayout="@layout/layout_expandable_view_header_4"
                 app:animationDuration="200">
-
-                <include layout="@layout/layout_expandable_view_header_4" />
 
                 <FrameLayout
                     android:id="@+id/expandable_view_4_content"

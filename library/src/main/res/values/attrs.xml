@@ -11,6 +11,5 @@
         <attr name="addGradientOverlayWhenCollapsed" format="boolean" />
         <attr name="gradientOverlayColor" format="color|reference" />
         <attr name="collapsedContentHeight" format="dimension" />
-        <attr name="hasRoundedCorners" format="boolean" />
     </declare-styleable>
 </resources>

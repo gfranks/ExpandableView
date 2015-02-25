@@ -1,7 +1,7 @@
 package com.github.gfranks.expandable.view.sample;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +45,12 @@ public class MainActivity extends ActionBarActivity implements ExpandableView.Ex
                     .beginTransaction()
                     .attach(fragment)
                     .commit();
+        }
+
+        ExpandableView expandableView = (ExpandableView) findViewById(R.id.expandable_view);
+        if (expandableView != null && !expandableView.isExpanded()) {
+            ImageView indicator = (ImageView) expandableView.findViewById(R.id.expandable_footer_indicator);
+            indicator.setImageResource(R.drawable.ic_arrow_expand);
         }
     }
 
