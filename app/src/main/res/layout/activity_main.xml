@@ -27,7 +27,7 @@
                 app:contentLayout="@layout/layout_expandable_view_content"
                 app:footerLayout="@layout/layout_expandable_view_footer"
                 app:collapsedContentHeight="50dp"
-                app:addGradientOverlayWhenCollapsed="true"
+                app:addOverlayWhenCollapsed="true"
                 app:gradientOverlayColor="@color/theme_red"
                 app:animationDuration="200" />
 
@@ -39,7 +39,7 @@
                 app:headerLayout="@layout/layout_expandable_view_header_2"
                 app:contentLayout="@layout/layout_expandable_view_content_2"
                 app:collapsedContentHeight="50dp"
-                app:addGradientOverlayWhenCollapsed="true"
+                app:addOverlayWhenCollapsed="true"
                 app:gradientOverlayColor="@color/theme_white"
                 app:animationDuration="200" />
 

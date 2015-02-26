@@ -8,8 +8,9 @@
         <attr name="contentLayout" format="reference" />
         <attr name="footerLayout" format="reference" />
         <attr name="disableExpandCollapseOnClick" format="boolean" />
-        <attr name="addGradientOverlayWhenCollapsed" format="boolean" />
+        <attr name="addOverlayWhenCollapsed" format="boolean" />
         <attr name="gradientOverlayColor" format="color|reference" />
+        <attr name="customContentOverlay" format="reference" />
         <attr name="collapsedContentHeight" format="dimension" />
     </declare-styleable>
 </resources>

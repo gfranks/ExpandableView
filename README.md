@@ -132,8 +132,9 @@ Customization:
  * `contentLayout` Layout resource you wish to use as your content view
  * `footerLayout` Layout resource you wish to use as your footer view (Optional)
  * `disableExpandCollapseOnClick` Boolean disabling collapse/expandsion when any view is clicked (should you wish to handle this on your own)
- * `addGradientOverlayWhenCollapsed` Boolean determining if you would like to add a gradient overlay over your content when collapsed (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)
- * `gradientOverlayColor` Color of the gradient overlay used to overlay the content view when collapsed (Gradient goes from Color.TRANSPARENT to this color, defaults to Color.WHITE)
+ * `addOverlayWhenCollapsed` Boolean determining if you would like to add a gradient overlay over your content when collapsed (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)
+ * `gradientOverlayColor` Color of the gradient overlay used to overlay the content view when collapsed (Gradient goes from `Color.TRANSPARENT` to this color, defaults to `Color.WHITE`)
+ * `customContentOverlay` View to be used as a custom content overlay. This will override the gradient overlay if a gradient overlay color is set and no alpha change will be applied to this. You can handle the alpha change if you'd like in the `onHeightOffsetChanged(...)` callback. (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)
  * `collapsedContentHeight` Dimension used as the collapsed content height (Defaults to 0)
 
 Callback Methods:
@@ -161,7 +162,7 @@ Installation:
 
 - Follow these steps to include aar binary in your project:
 
-    1: Copy com.github.gfranks.expandable.view-1.0.aar into your projects libs/ directory.
+    1: Copy com.github.gfranks.expandable.view-1.1.aar into your projects libs/ directory.
 
     2: Include the following either in your top level build.gradle file or your module specific one:
     ```
@@ -172,7 +173,7 @@ Installation:
      }
     ```
     3: Under your dependencies for your main module's build.gradle file, you can reference that aar file like so:
-    ```compile 'com.github.gfranks.expandable.view:com.github.gfranks.expandable.view-1.0@aar'```
+    ```compile 'com.github.gfranks.expandable.view:com.github.gfranks.expandable.view-1.1@aar'```
 
 License
 -------

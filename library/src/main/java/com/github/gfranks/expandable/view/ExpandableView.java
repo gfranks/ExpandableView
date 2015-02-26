@@ -36,10 +36,10 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
      */
     private boolean mDisableExpandCollapseOnClick;
     /**
-     * boolean determining if gradient overlay should be added over content when collapsed
+     * boolean determining if an overlay should be added over content when collapsed
      * (NOTE: this will only be applied if the collapsed content height is greater than 0)
      */
-    private boolean mAddGradientOverlayWhenCollapsed;
+    private boolean mAddOverlayWhenCollapsed;
     /**
      * Color of the gradient overlay (starts with Color.TRANSPARENT)
      */
@@ -48,6 +48,11 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
      * The view that holds the gradient overlay
      */
     private View mGradientOverlay;
+    /**
+     * A custom overlay that will replace the gradient overlay if you desire to overlay the content when collapsed
+     */
+    private View mCustomContentOverlay;
+    private int mCustomContentOverlayResId;
     /**
      * duration for expansion and collapse animation
      */
@@ -134,6 +139,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         setOrientation(VERTICAL);
         setClipChildren(true);
         setClipToPadding(true);
+        setTag(getClass().getName());
         mAnimationDuration = DEFAULT_ANIMATION_DURATION;
     }
 
@@ -146,6 +152,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         setOrientation(VERTICAL);
         setClipChildren(true);
         setClipToPadding(true);
+        setTag(getClass().getName());
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ExpandableView, defStyleAttr, 0);
         mIsCollapsed = a.getBoolean(R.styleable.ExpandableView_isCollapsed, false);
@@ -156,8 +163,9 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         mFooterViewResId = a.getResourceId(R.styleable.ExpandableView_footerLayout, -1);
         mDisableExpandCollapseOnClick = a.getBoolean(R.styleable.ExpandableView_disableExpandCollapseOnClick, false);
         mCollapsedContentHeight = a.getDimensionPixelSize(R.styleable.ExpandableView_collapsedContentHeight, 0);
-        mAddGradientOverlayWhenCollapsed = a.getBoolean(R.styleable.ExpandableView_addGradientOverlayWhenCollapsed, false);
+        mAddOverlayWhenCollapsed = a.getBoolean(R.styleable.ExpandableView_addOverlayWhenCollapsed, false);
         mGradientOverlayColor = a.getColor(R.styleable.ExpandableView_gradientOverlayColor, Color.WHITE);
+        mCustomContentOverlayResId = a.getResourceId(R.styleable.ExpandableView_customContentOverlay, -1);
         a.recycle();
     }
 
@@ -197,15 +205,19 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         if (expanded) {
             getContentView().getLayoutParams().height = LayoutParams.WRAP_CONTENT;
             getContentView().setVisibility(View.VISIBLE);
-            if (mAddGradientOverlayWhenCollapsed && mGradientOverlay != null) {
-                mGradientOverlay.setAlpha(0f);
+            if (isAddOverlayWhenCollapsed()) {
+                if (getCustomContentOverlay() == null && mGradientOverlay != null) {
+                    mGradientOverlay.setAlpha(0f);
+                }
             }
         } else {
             getContentView().getLayoutParams().height = mCollapsedContentHeight;
             if (mCollapsedContentHeight <= 0) {
                 getContentView().setVisibility(View.GONE);
-            } else if (mAddGradientOverlayWhenCollapsed && mGradientOverlay != null) {
-                mGradientOverlay.setAlpha(1f);
+            } else if (isAddOverlayWhenCollapsed()) {
+                if (getCustomContentOverlay() == null && mGradientOverlay != null) {
+                    mGradientOverlay.setAlpha(1f);
+                }
             }
         }
         getContentView().requestLayout();
@@ -241,6 +253,16 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
      */
     public void setDisableExpandCollapseOnClick(boolean disableExpandCollapseOnClick) {
         mDisableExpandCollapseOnClick = disableExpandCollapseOnClick;
+
+        if (getHeaderView() != null) {
+            getHeaderView().setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
+        }
+        if (getContentView() != null) {
+            getContentView().setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
+        }
+        if (getFooterView() != null) {
+            getFooterView().setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
+        }
     }
 
     /**
@@ -261,29 +283,74 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
     }
 
     /**
-     * @return boolean if a gradient is overlayed on top of the content view
-     * @see #setAddGradientOverlayWhenCollapsed(boolean)
+     * @return boolean if a view is overlaid on top of the content view
+     * @see #setAddOverlayWhenCollapsed(boolean)
      */
-    public boolean isAddGradientOverlayWhenCollapsed() {
-        return mAddGradientOverlayWhenCollapsed;
+    public boolean isAddOverlayWhenCollapsed() {
+        return mAddOverlayWhenCollapsed;
     }
 
     /**
-     * @param addGradientOverlayWhenCollapsed boolean determining if a gradient overlay should be added on top
-     *                                        of the content view when collapsed. (NOTE: This will only be applied if the collapsed content height is greater than 0)
+     * @param addOverlayWhenCollapsed boolean determining if a an overlay should be added on top
+     *                                of the content view when collapsed. (NOTE: This will only be applied if the collapsed content height is greater than 0)
      */
-    public void setAddGradientOverlayWhenCollapsed(boolean addGradientOverlayWhenCollapsed) {
-        if (mAddGradientOverlayWhenCollapsed == addGradientOverlayWhenCollapsed) {
+    public void setAddOverlayWhenCollapsed(boolean addOverlayWhenCollapsed) {
+        if (isAddOverlayWhenCollapsed() == addOverlayWhenCollapsed) {
             return;
         }
 
-        mAddGradientOverlayWhenCollapsed = addGradientOverlayWhenCollapsed;
+        mAddOverlayWhenCollapsed = addOverlayWhenCollapsed;
         if (mIsInflated) {
-            if (mAddGradientOverlayWhenCollapsed) {
-                ensureGradientOverlayAdded();
+            if (isAddOverlayWhenCollapsed()) {
+                ensureContentOverlayAdded();
             } else {
-                ensureGradientOverlayRemoved();
+                ensureContentOverlayRemoved();
             }
+        }
+    }
+
+    /**
+     * @return the custom content overlay view that overlays the content when collapsed
+     * @see #setCustomContentOverlay(android.view.View)
+     */
+    public View getCustomContentOverlay() {
+        return mCustomContentOverlay;
+    }
+
+    /**
+     * NOTE: Please #setAddOverlayWhenCollapsed(true) before you call
+     *
+     * @param customContentOverlayResId layout resource id to be inflated as the custom overlay view
+     * @see #setCustomContentOverlay(android.view.View)
+     */
+    public void setCustomContentOverlay(int customContentOverlayResId) {
+        if (mCustomContentOverlay != null && mIsInflated) {
+            ensureContentOverlayRemoved();
+        }
+
+        inflate(getContext(), customContentOverlayResId, this);
+        mCustomContentOverlay = getChildAt(getChildCount() - 1);
+        removeView(mCustomContentOverlay);
+
+        if (mIsInflated) {
+            ensureContentOverlayAdded();
+        }
+    }
+
+    /**
+     * NOTE: Please #setAddOverlayWhenCollapsed(true) before you call
+     *
+     * @param customContentOverlay a View that will replace the gradient overlay to overlay the content when collapsed
+     * @see #setAddOverlayWhenCollapsed(boolean)
+     */
+    public void setCustomContentOverlay(View customContentOverlay) {
+        if (mCustomContentOverlay == customContentOverlay) {
+            return;
+        }
+
+        mCustomContentOverlay = customContentOverlay;
+        if (mIsInflated) {
+            ensureContentOverlayAdded();
         }
     }
 
@@ -296,14 +363,23 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
     }
 
     /**
-     * NOTE: Please set before you call
+     * NOTE: Please #setAddOverlayWhenCollapsed(true) before you call
      *
-     * @param gradientOverlayColor color to be used to set the gradient overlay. Color will start as transparent
+     * @param gradientOverlayColor color to be used to set the as the overlay. Color will start as transparent
      *                             and gradient applied to match this color
-     * @see #setAddGradientOverlayWhenCollapsed(boolean) or proper gradient color may not be applied
+     * @see #setAddOverlayWhenCollapsed(boolean) or proper gradient color may not be applied
      */
     public void setGradientOverlayColor(int gradientOverlayColor) {
         mGradientOverlayColor = gradientOverlayColor;
+    }
+
+    /**
+     * @return the header view
+     * @see #setHeaderView(int)
+     * @see #setHeaderView(android.view.View)
+     */
+    public View getHeaderView() {
+        return mHeaderView;
     }
 
     /**
@@ -316,7 +392,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         }
         inflate(getContext(), headerLayoutResId, this);
         if (getChildCount() > 1) {
-            View child = getChildAt(getChildCount()-1);
+            View child = getChildAt(getChildCount() - 1);
             removeView(child);
             addView(child, 0);
         }
@@ -335,12 +411,12 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
     }
 
     /**
-     * @return the header view
-     * @see #setHeaderView(int)
-     * @see #setHeaderView(android.view.View)
+     * @return the content view
+     * @see #setContentView(int)
+     * @see #setContentView(android.view.View)
      */
-    public View getHeaderView() {
-        return mHeaderView;
+    public View getContentView() {
+        return mContentView;
     }
 
     /**
@@ -353,7 +429,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         }
         inflate(getContext(), contentLayoutResId, this);
         if (getChildCount() > 2) {
-            View child = getChildAt(getChildCount()-1);
+            View child = getChildAt(getChildCount() - 1);
             removeView(child);
             addView(child, 1);
         }
@@ -369,20 +445,20 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         }
         addView(contentView);
         mContentView = contentView;
-        mContentView.setOnClickListener(this);
+        mContentView.setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
 
-        if (mIsInflated && mAddGradientOverlayWhenCollapsed) {
-            ensureGradientOverlayAdded();
+        if (mIsInflated && isAddOverlayWhenCollapsed()) {
+            ensureContentOverlayAdded();
         }
     }
 
     /**
-     * @return the content view
-     * @see #setContentView(int)
-     * @see #setContentView(android.view.View)
+     * @return the footer view
+     * @see #setFooterView(int)
+     * @see #setFooterView(android.view.View)
      */
-    public View getContentView() {
-        return mContentView;
+    public View getFooterView() {
+        return mFooterView;
     }
 
     /**
@@ -407,16 +483,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         }
         addView(footerView, getChildCount());
         mFooterView = footerView;
-        mFooterView.setOnClickListener(this);
-    }
-
-    /**
-     * @return the footer view
-     * @see #setFooterView(int)
-     * @see #setFooterView(android.view.View)
-     */
-    public View getFooterView() {
-        return mFooterView;
+        mFooterView.setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
     }
 
     /**
@@ -434,7 +501,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
 
         Animator animator = getHeightAnimator(fromHeight, toHeight);
         animator.addListener(mExpandAnimationListener);
-        if (mAddGradientOverlayWhenCollapsed && mGradientOverlay != null) {
+        if (isAddOverlayWhenCollapsed() && (mGradientOverlay != null || getCustomContentOverlay() != null)) {
             AnimatorSet set = new AnimatorSet();
             set.playTogether(animator, getGradientOverlayAlphaAnimator(1f, 0f));
             set.start();
@@ -460,7 +527,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
 
         Animator animator = getHeightAnimator(fromHeight, toHeight);
         animator.addListener(mCollapseAnimationListener);
-        if (mAddGradientOverlayWhenCollapsed && mGradientOverlay != null) {
+        if (isAddOverlayWhenCollapsed() && (mGradientOverlay != null || getCustomContentOverlay() != null)) {
             AnimatorSet set = new AnimatorSet();
             set.playTogether(animator, getGradientOverlayAlphaAnimator(0f, 1f));
             set.start();
@@ -468,7 +535,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
             animator.start();
         }
     }
-    
+
     @Override
     public void onClick(View v) {
         if (mDisableExpandCollapseOnClick) {
@@ -515,6 +582,10 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
             setFooterView(mFooterViewResId);
         }
 
+        if (mCustomContentOverlayResId != -1) {
+            setCustomContentOverlay(mCustomContentOverlayResId);
+        }
+
         if (getChildCount() > 3) {
             throw new IllegalStateException("ExpandableView may only have 3 children (header + content + footer)");
         }
@@ -523,27 +594,27 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         if (getChildCount() > 0) {
             if (getHeaderView() == null) {
                 mHeaderView = getChildAt(0);
-                mHeaderView.setOnClickListener(this);
+                mHeaderView.setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
             }
 
             if (getChildCount() > 1) {
                 if (getContentView() == null) {
                     mContentView = getChildAt(1);
-                    mContentView.setOnClickListener(this);
+                    mContentView.setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
                 }
 
 
                 if (getChildCount() > 2) {
                     if (getFooterView() == null) {
                         mFooterView = getChildAt(2);
-                        mFooterView.setOnClickListener(this);
+                        mFooterView.setOnClickListener(mDisableExpandCollapseOnClick ? null : this);
                     }
                 }
             }
         }
 
-        if (mAddGradientOverlayWhenCollapsed) {
-            ensureGradientOverlayAdded();
+        if (isAddOverlayWhenCollapsed()) {
+            ensureContentOverlayAdded();
         }
 
         if (!isExpanded()) {
@@ -551,31 +622,49 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         }
     }
 
-    private void ensureGradientOverlayAdded() {
+    private void ensureContentOverlayAdded() {
         if (getContentView() == null || mCollapsedContentHeight == 0) {
             Log.w(getClass().getName(), "Inflation may be in progress but -> Gradient overlay is " +
                     "only supported if you provide a collapsed view height greater than 0");
             return;
         }
 
+        ensureContentOverlayRemoved();
+
         removeView(getContentView());
         FrameLayout overlayContainer = new FrameLayout(getContext());
-        GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.TRANSPARENT, mGradientOverlayColor});
-        gradientDrawable.setGradientType(GradientDrawable.RECTANGLE);
         overlayContainer.addView(getContentView());
-        mGradientOverlay = new ImageView(getContext());
-        ((ImageView) mGradientOverlay).setImageDrawable(gradientDrawable);
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mCollapsedContentHeight);
-        lp.gravity = Gravity.BOTTOM;
-        mGradientOverlay.setLayoutParams(lp);
-        overlayContainer.addView(mGradientOverlay);
+        if (getCustomContentOverlay() == null) {
+            GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.TRANSPARENT, mGradientOverlayColor});
+            gradientDrawable.setGradientType(GradientDrawable.RECTANGLE);
+            mGradientOverlay = new ImageView(getContext());
+            ((ImageView) mGradientOverlay).setImageDrawable(gradientDrawable);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mCollapsedContentHeight);
+            lp.gravity = Gravity.BOTTOM;
+            mGradientOverlay.setLayoutParams(lp);
+            overlayContainer.addView(mGradientOverlay);
+        } else {
+            mCustomContentOverlay.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.AT_MOST),
+                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+            FrameLayout.LayoutParams lp;
+            if (mCustomContentOverlay.getMeasuredHeight() > mCollapsedContentHeight) {
+                lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mCollapsedContentHeight);
+            } else {
+                lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+            lp.gravity = Gravity.BOTTOM;
+            getCustomContentOverlay().setLayoutParams(lp);
+            overlayContainer.addView(getCustomContentOverlay());
+        }
         if (isExpanded()) {
-            mGradientOverlay.setAlpha(0f);
+            if (getCustomContentOverlay() == null) {
+                mGradientOverlay.setAlpha(0f);
+            }
         }
         addView(overlayContainer, 1, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     }
 
-    private void ensureGradientOverlayRemoved() {
+    private void ensureContentOverlayRemoved() {
         try {
             ((FrameLayout) getChildAt(1)).removeView(getContentView());
             removeViewAt(1);
@@ -606,7 +695,9 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mGradientOverlay.setAlpha((float) animation.getAnimatedValue());
+                if (getCustomContentOverlay() == null) {
+                    mGradientOverlay.setAlpha((float) animation.getAnimatedValue());
+                }
             }
         });
         return alphaAnimator;
