@@ -9,7 +9,7 @@ What It Looks Like:
 
 See a short video of this control here:
 
-[![Sample Video](http://img.youtube.com/vi/iQuti7TIHlM/0.jpg)](https://www.youtube.com/watch?v=iQuti7TIHlM)
+[![Sample Video](http://img.youtube.com/vi/ZyxLJjzBUCg/0.jpg)](https://www.youtube.com/watch?v=ZyxLJjzBUCg)
 
 ### Screen Shots
 
@@ -23,7 +23,8 @@ How To Use It:
 
 ```java
 
-// See Sample for additional customization
+// ExpandableView Samples.
+// See Sample Module for additional customization as well as multiple example.
 
 /**
  * Initialize with separate layout files for your header, content, and footer
@@ -32,9 +33,9 @@ How To Use It:
      android:id="@+id/expandable_view"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     app:headerLayout="@layout/layout_expandable_view_header"
-     app:contentLayout="@layout/layout_expandable_view_content"
-     app:footerLayout="@layout/layout_expandable_view_footer" />
+     app:ev_headerLayout="@layout/layout_expandable_view_header"
+     app:ev_contentLayout="@layout/layout_expandable_view_content"
+     app:ev_footerLayout="@layout/layout_expandable_view_footer" />
 
 /**
  * Initialize by manually adding your header, content, and footer
@@ -108,7 +109,7 @@ How To Use It:
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:layout_marginTop="10dp"
-     app:contentLayout="@layout/layout_expandable_view_content">
+     app:ev_contentLayout="@layout/layout_expandable_view_content">
 
      <TextView
          android:layout_width="match_parent"
@@ -121,21 +122,45 @@ How To Use It:
          android:text="This is my footer" />
 
  </com.github.gfranks.expandable.view.ExpandableView>
+
+
+// ExpandableListView Sample.
+// See Sample Module for additional customization as well an example.
+
+/**
+ * Initialize and set whether to keep a single or all ExpandableViews expanded (keepViewsExpanded)
+ */
+ <com.github.gfranks.expandable.view.ExpandableListView
+     android:id="@+id/expandable_list_view"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     app:ev_keepViewsExpanded="true" />
+     <!-- Setting this value (keepViewsExpanded) to true will allow the list to keep all expandable views, expanded.
+          Setting to false will only allow 1 to be expanded -->
+
+     <!-- Be sure to include an ExpandableView in your list view layouts (and set isCollapsed for all views to be collapsed by default, if you desire.
+          Any Adapter, custom or not, will work. You can still use this list view without any expandable views, however, what would be the point
+          NOTE: Please do not set an ExpandableViewListener on your ExpandableViews, this will break functionality. Instead, set it on the ExpandableListView
+          using ExpandableListView.setExpandableViewListener(ExpandableView.ExpandableViewListener listener) -->
 ```
 
 Customization:
 ----------------
- * `isCollapsed` Boolean determining if ExpandableView should be collapsed by default
- * `collapseOnContentClick` Boolean determining if ExpandableView can be collapsed/expanded when the content view is clicked
- * `animationDuration` Int specifying your desired animation duration (default is 200ms)
- * `headerLayout` Layout resource you wish to use as your header view
- * `contentLayout` Layout resource you wish to use as your content view
- * `footerLayout` Layout resource you wish to use as your footer view (Optional)
- * `disableExpandCollapseOnClick` Boolean disabling collapse/expandsion when any view is clicked (should you wish to handle this on your own)
- * `addOverlayWhenCollapsed` Boolean determining if you would like to add a gradient overlay over your content when collapsed (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)
- * `gradientOverlayColor` Color of the gradient overlay used to overlay the content view when collapsed (Gradient goes from `Color.TRANSPARENT` to this color, defaults to `Color.WHITE`)
- * `customContentOverlay` View to be used as a custom content overlay. This will override the gradient overlay if a gradient overlay color is set and no alpha change will be applied to this. You can handle the alpha change if you'd like in the `onHeightOffsetChanged(...)` callback. (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)
- * `collapsedContentHeight` Dimension used as the collapsed content height (Defaults to 0)
+###ExpandableView
+ * `ev_isCollapsed` Boolean determining if ExpandableView should be collapsed by default
+ * `ev_collapseOnContentClick` Boolean determining if ExpandableView can be collapsed/expanded when the content view is clicked
+ * `ev_animationDuration` Int specifying your desired animation duration (default is 200ms)
+ * `ev_headerLayout` Layout resource you wish to use as your header view
+ * `ev_contentLayout` Layout resource you wish to use as your content view
+ * `ev_footerLayout` Layout resource you wish to use as your footer view (Optional)
+ * `ev_disableExpandCollapseOnClick` Boolean disabling collapse/expandsion when any view is clicked (should you wish to handle this on your own)
+ * `ev_addOverlayWhenCollapsed` Boolean determining if you would like to add a gradient overlay over your content when collapsed (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)
+ * `ev_gradientOverlayColor` Color of the gradient overlay used to overlay the content view when collapsed (Gradient goes from `Color.TRANSPARENT` to this color, defaults to `Color.WHITE`)
+ * `ev_customContentOverlay` View to be used as a custom content overlay. This will override the gradient overlay if a gradient overlay color is set and no alpha change will be applied to this. You can handle the alpha change if you'd like in the `onHeightOffsetChanged(...)` callback. (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)
+ * `ev_collapsedContentHeight` Dimension used as the collapsed content height (Defaults to 0)
+
+###ExpandableListView
+ * `ev_keepViewsExpanded` Boolean determining if the ExpandableListView can have multiple expandable views, expanded. If false, only 1 will be allowed to be expanded.
 
 Callback Methods:
 ----------------
@@ -162,7 +187,7 @@ Installation:
 
 - Follow these steps to include aar binary in your project:
 
-    1: Copy com.github.gfranks.expandable.view-1.1.aar into your projects libs/ directory.
+    1: Copy com.github.gfranks.expandable.view-1.2.aar into your projects libs/ directory.
 
     2: Include the following either in your top level build.gradle file or your module specific one:
     ```
@@ -173,7 +198,7 @@ Installation:
      }
     ```
     3: Under your dependencies for your main module's build.gradle file, you can reference that aar file like so:
-    ```compile 'com.github.gfranks.expandable.view:com.github.gfranks.expandable.view-1.1@aar'```
+    ```compile 'com.github.gfranks.expandable.view:com.github.gfranks.expandable.view-1.2@aar'```
 
 License
 -------

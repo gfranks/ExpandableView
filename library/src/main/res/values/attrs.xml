@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ExpandableView">
-        <attr name="isCollapsed" format="boolean" />
-        <attr name="collapseOnContentClick" format="boolean" />
-        <attr name="animationDuration" format="integer" />
-        <attr name="headerLayout" format="reference" />
-        <attr name="contentLayout" format="reference" />
-        <attr name="footerLayout" format="reference" />
-        <attr name="disableExpandCollapseOnClick" format="boolean" />
-        <attr name="addOverlayWhenCollapsed" format="boolean" />
-        <attr name="gradientOverlayColor" format="color|reference" />
-        <attr name="customContentOverlay" format="reference" />
-        <attr name="collapsedContentHeight" format="dimension" />
+        <attr name="ev_isCollapsed" format="boolean" />
+        <attr name="ev_collapseOnContentClick" format="boolean" />
+        <attr name="ev_animationDuration" format="integer" />
+        <attr name="ev_headerLayout" format="reference" />
+        <attr name="ev_contentLayout" format="reference" />
+        <attr name="ev_footerLayout" format="reference" />
+        <attr name="ev_disableExpandCollapseOnClick" format="boolean" />
+        <attr name="ev_addOverlayWhenCollapsed" format="boolean" />
+        <attr name="ev_gradientOverlayColor" format="color|reference" />
+        <attr name="ev_customContentOverlay" format="reference" />
+        <attr name="ev_collapsedContentHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ExpandableListView">
+        <attr name="ev_keepViewsExpanded" format="boolean" />
     </declare-styleable>
 </resources>

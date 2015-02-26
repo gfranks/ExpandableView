@@ -1,5 +1,6 @@
 package com.github.gfranks.expandable.view.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -63,6 +64,10 @@ public class MainActivity extends ActionBarActivity implements ExpandableView.Ex
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
+        if (id == R.id.action_list) {
+            startActivity(new Intent(this, ExpandableListActivity.class));
+        }
 
         return super.onOptionsItemSelected(item);
     }

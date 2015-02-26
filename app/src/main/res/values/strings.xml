@@ -2,7 +2,7 @@
     <string name="app_name">ExpandableViewSample</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_list">Expandable List Example</string>
 
     <string name="expandable_view_header_text">ExpandableView with a footer, gradient overlay, and a default collapse height of 50dp</string>
     <string name="expandable_view_header_text_2">ExpandableView with no footer, gradient overlay, and a default collapse height of 50dp</string>

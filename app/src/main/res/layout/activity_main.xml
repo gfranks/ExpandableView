@@ -23,43 +23,43 @@
                 android:id="@+id/expandable_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:headerLayout="@layout/layout_expandable_view_header"
-                app:contentLayout="@layout/layout_expandable_view_content"
-                app:footerLayout="@layout/layout_expandable_view_footer"
-                app:collapsedContentHeight="50dp"
-                app:addOverlayWhenCollapsed="true"
-                app:gradientOverlayColor="@color/theme_red"
-                app:animationDuration="200" />
+                app:ev_headerLayout="@layout/layout_expandable_view_header"
+                app:ev_contentLayout="@layout/layout_expandable_view_content"
+                app:ev_footerLayout="@layout/layout_expandable_view_footer"
+                app:ev_collapsedContentHeight="50dp"
+                app:ev_addOverlayWhenCollapsed="true"
+                app:ev_gradientOverlayColor="@color/theme_red"
+                app:ev_animationDuration="200" />
 
             <com.github.gfranks.expandable.view.ExpandableView
                 android:id="@+id/expandable_view_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:headerLayout="@layout/layout_expandable_view_header_2"
-                app:contentLayout="@layout/layout_expandable_view_content_2"
-                app:collapsedContentHeight="50dp"
-                app:addOverlayWhenCollapsed="true"
-                app:gradientOverlayColor="@color/theme_white"
-                app:animationDuration="200" />
+                app:ev_headerLayout="@layout/layout_expandable_view_header_2"
+                app:ev_contentLayout="@layout/layout_expandable_view_content_2"
+                app:ev_collapsedContentHeight="50dp"
+                app:ev_addOverlayWhenCollapsed="true"
+                app:ev_gradientOverlayColor="@color/theme_white"
+                app:ev_animationDuration="200" />
 
             <com.github.gfranks.expandable.view.ExpandableView
                 android:id="@+id/expandable_view_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:headerLayout="@layout/layout_expandable_view_header_3"
-                app:contentLayout="@layout/layout_expandable_view_content_3"
-                app:collapseOnContentClick="true"
-                app:animationDuration="200" />
+                app:ev_headerLayout="@layout/layout_expandable_view_header_3"
+                app:ev_contentLayout="@layout/layout_expandable_view_content_3"
+                app:ev_collapseOnContentClick="true"
+                app:ev_animationDuration="200" />
 
             <com.github.gfranks.expandable.view.ExpandableView
                 android:id="@+id/expandable_view_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:headerLayout="@layout/layout_expandable_view_header_4"
-                app:animationDuration="200">
+                app:ev_headerLayout="@layout/layout_expandable_view_header_4"
+                app:ev_animationDuration="200">
 
                 <FrameLayout
                     android:id="@+id/expandable_view_4_content"

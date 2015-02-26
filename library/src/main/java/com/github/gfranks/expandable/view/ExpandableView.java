@@ -155,17 +155,17 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
         setTag(getClass().getName());
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ExpandableView, defStyleAttr, 0);
-        mIsCollapsed = a.getBoolean(R.styleable.ExpandableView_isCollapsed, false);
-        mCollapseOnContentClick = a.getBoolean(R.styleable.ExpandableView_collapseOnContentClick, false);
-        mAnimationDuration = a.getInt(R.styleable.ExpandableView_animationDuration, DEFAULT_ANIMATION_DURATION);
-        mHeaderViewResId = a.getResourceId(R.styleable.ExpandableView_headerLayout, -1);
-        mContentViewResId = a.getResourceId(R.styleable.ExpandableView_contentLayout, -1);
-        mFooterViewResId = a.getResourceId(R.styleable.ExpandableView_footerLayout, -1);
-        mDisableExpandCollapseOnClick = a.getBoolean(R.styleable.ExpandableView_disableExpandCollapseOnClick, false);
-        mCollapsedContentHeight = a.getDimensionPixelSize(R.styleable.ExpandableView_collapsedContentHeight, 0);
-        mAddOverlayWhenCollapsed = a.getBoolean(R.styleable.ExpandableView_addOverlayWhenCollapsed, false);
-        mGradientOverlayColor = a.getColor(R.styleable.ExpandableView_gradientOverlayColor, Color.WHITE);
-        mCustomContentOverlayResId = a.getResourceId(R.styleable.ExpandableView_customContentOverlay, -1);
+        mIsCollapsed = a.getBoolean(R.styleable.ExpandableView_ev_isCollapsed, false);
+        mCollapseOnContentClick = a.getBoolean(R.styleable.ExpandableView_ev_collapseOnContentClick, false);
+        mAnimationDuration = a.getInt(R.styleable.ExpandableView_ev_animationDuration, DEFAULT_ANIMATION_DURATION);
+        mHeaderViewResId = a.getResourceId(R.styleable.ExpandableView_ev_headerLayout, -1);
+        mContentViewResId = a.getResourceId(R.styleable.ExpandableView_ev_contentLayout, -1);
+        mFooterViewResId = a.getResourceId(R.styleable.ExpandableView_ev_footerLayout, -1);
+        mDisableExpandCollapseOnClick = a.getBoolean(R.styleable.ExpandableView_ev_disableExpandCollapseOnClick, false);
+        mCollapsedContentHeight = a.getDimensionPixelSize(R.styleable.ExpandableView_ev_collapsedContentHeight, 0);
+        mAddOverlayWhenCollapsed = a.getBoolean(R.styleable.ExpandableView_ev_addOverlayWhenCollapsed, false);
+        mGradientOverlayColor = a.getColor(R.styleable.ExpandableView_ev_gradientOverlayColor, Color.WHITE);
+        mCustomContentOverlayResId = a.getResourceId(R.styleable.ExpandableView_ev_customContentOverlay, -1);
         a.recycle();
     }
 
@@ -765,6 +765,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
                         return new SavedState[size];
                     }
                 };
+
         boolean mIsCollapsed;
 
         SavedState(Parcelable superState) {
