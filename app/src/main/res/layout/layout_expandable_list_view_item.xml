@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.github.gfranks.expandable.view.ExpandableView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:contentLayout="@layout/layout_expandable_view_content"
+        app:isCollapsed="true">
+
+        <TextView
+            android:id="@+id/expandable_view_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_red"
+            android:padding="10dp"
+            android:text="@string/expandable_view_header_text"
+            android:textColor="@color/theme_white"
+            android:textStyle="bold" />
+
+    </com.github.gfranks.expandable.view.ExpandableView>
+
+</LinearLayout>

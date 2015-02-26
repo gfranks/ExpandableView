@@ -765,6 +765,7 @@ public class ExpandableView extends LinearLayout implements View.OnClickListener
                         return new SavedState[size];
                     }
                 };
+
         boolean mIsCollapsed;
 
         SavedState(Parcelable superState) {

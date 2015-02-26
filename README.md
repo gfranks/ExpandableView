@@ -23,7 +23,7 @@ How To Use It:
 
 ```java
 
-// See Sample for additional customization
+// ExpandableView Samples. See Sample Module for additional customization as well as multiple example.
 
 /**
  * Initialize with separate layout files for your header, content, and footer
@@ -102,6 +102,7 @@ How To Use It:
 
 /**
  * Initialize with separate layout files for your header, content, and/or footer and specifying your other views manually
+ * See Sample Module for additional customization as well an example.
  */
  <com.github.gfranks.expandable.view.ExpandableView
      android:id="@+id/expandable_view"
@@ -121,10 +122,28 @@ How To Use It:
          android:text="This is my footer" />
 
  </com.github.gfranks.expandable.view.ExpandableView>
+
+// ExpandableListView Sample
+/**
+ * Initialize and set whether to keep a single or all ExpandableViews expanded (keepViewsExpanded)
+ */
+ <com.github.gfranks.expandable.view.ExpandableListView
+     android:id="@+id/expandable_list_view"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     app:keepViewsExpanded="true" />
+     <!-- Setting this value (keepViewsExpanded) to true will allow the list to keep all expandable views, expanded.
+          Setting to false will only allow 1 to be expanded -->
+
+     <!-- Be sure to include an ExpandableView in your list view layouts (and set isCollapsed for all views to be collapsed by default, if you desire.
+          Any Adapter, custom or not, will work. You can still use this list view without any expandable views, however, what would be the point
+          NOTE: Please do not set an ExpandableViewListener on your ExpandableViews, this will break functionality. Instead, set it on the ExpandableListView
+          using ExpandableListView.setExpandableViewListener(ExpandableView.ExpandableViewListener listener) -->
 ```
 
 Customization:
 ----------------
+###ExpandableView
  * `isCollapsed` Boolean determining if ExpandableView should be collapsed by default
  * `collapseOnContentClick` Boolean determining if ExpandableView can be collapsed/expanded when the content view is clicked
  * `animationDuration` Int specifying your desired animation duration (default is 200ms)
@@ -136,6 +155,9 @@ Customization:
  * `gradientOverlayColor` Color of the gradient overlay used to overlay the content view when collapsed (Gradient goes from `Color.TRANSPARENT` to this color, defaults to `Color.WHITE`)
  * `customContentOverlay` View to be used as a custom content overlay. This will override the gradient overlay if a gradient overlay color is set and no alpha change will be applied to this. You can handle the alpha change if you'd like in the `onHeightOffsetChanged(...)` callback. (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)
  * `collapsedContentHeight` Dimension used as the collapsed content height (Defaults to 0)
+
+###ExpandableListView
+ * `keepViewsExpanded` Boolean determining if the ExpandableListView can have multiple expandable views, expanded. If false, only 1 will be allowed to be expanded.
 
 Callback Methods:
 ----------------
@@ -162,7 +184,7 @@ Installation:
 
 - Follow these steps to include aar binary in your project:
 
-    1: Copy com.github.gfranks.expandable.view-1.1.aar into your projects libs/ directory.
+    1: Copy com.github.gfranks.expandable.view-1.2.aar into your projects libs/ directory.
 
     2: Include the following either in your top level build.gradle file or your module specific one:
     ```
@@ -173,7 +195,7 @@ Installation:
      }
     ```
     3: Under your dependencies for your main module's build.gradle file, you can reference that aar file like so:
-    ```compile 'com.github.gfranks.expandable.view:com.github.gfranks.expandable.view-1.1@aar'```
+    ```compile 'com.github.gfranks.expandable.view:com.github.gfranks.expandable.view-1.2@aar'```
 
 License
 -------

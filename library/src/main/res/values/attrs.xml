@@ -13,4 +13,8 @@
         <attr name="customContentOverlay" format="reference" />
         <attr name="collapsedContentHeight" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="ExpandableListView">
+        <attr name="keepViewsExpanded" format="boolean" />
+    </declare-styleable>
 </resources>
