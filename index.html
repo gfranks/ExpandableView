@@ -1,0 +1,293 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Expandableview by gfranks</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Expandableview</h1>
+        <p>ExpandableView for easy collasping/expanding of content</p>
+        <p class="view"><a href="https://github.com/gfranks/ExpandableView">View the Project on GitHub <small>gfranks/ExpandableView</small></a></p>
+        <ul>
+          <li><a href="https://github.com/gfranks/ExpandableView/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/gfranks/ExpandableView/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/gfranks/ExpandableView">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="expandableview" class="anchor" href="#expandableview" aria-hidden="true"><span class="octicon octicon-link"></span></a>ExpandableView</h1>
+
+<p>ExpandableView is a custom layout that handles easy expanding and collapsing of content via use of a header and an optional footer that is highly configurable and works for both phone and tablet. ExpandableView is only available for API levels 15+.
+See below for usage and examples. If you have any questions, issues, or want to contribute, please submit an issue or Pull Request, or you may contact me.</p>
+
+<h2>
+<a id="what-it-looks-like" class="anchor" href="#what-it-looks-like" aria-hidden="true"><span class="octicon octicon-link"></span></a>What It Looks Like:</h2>
+
+<p>See a short video of this control here:</p>
+
+<p><a href="https://www.youtube.com/watch?v=iQuti7TIHlM"><img src="http://img.youtube.com/vi/iQuti7TIHlM/0.jpg" alt="Sample Video"></a></p>
+
+<h3>
+<a id="screen-shots" class="anchor" href="#screen-shots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screen Shots</h3>
+
+<p><img src="/resources/screenshot1.png?raw=true" alt="Examples"> <img src="/resources/screenshot2.png?raw=true" alt="Examples"></p>
+
+<h2>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How To Use It:</h2>
+
+<h3>
+<a id="basic-example" class="anchor" href="#basic-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Example</h3>
+
+<div class="highlight highlight-java"><pre>
+<span class="pl-c">// ExpandableView Samples.</span>
+<span class="pl-c">// See Sample Module for additional customization as well as multiple example.</span>
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Initialize with separate layout files for your header, content, and footer</span>
+<span class="pl-c"> */</span>
+ <span class="pl-k">&lt;</span><span class="pl-stj">com.github.gfranks.expandable.view<span class="pl-k">.</span>ExpandableView</span>
+     android<span class="pl-k">:</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@+id/expandable_view<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+     app<span class="pl-k">:</span>headerLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_header<span class="pl-pds">"</span></span>
+     app<span class="pl-k">:</span>contentLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_content<span class="pl-pds">"</span></span>
+     app<span class="pl-k">:</span>footerLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_footer<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Initialize by manually adding your header, content, and footer</span>
+<span class="pl-c"> */</span>
+ <span class="pl-k">&lt;</span><span class="pl-stj">com.github.gfranks.expandable.view<span class="pl-k">.</span>ExpandableView</span>
+     android<span class="pl-k">:</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@+id/expandable_view<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_marginTop<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>10dp<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-stj">TextView</span>
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>This is my header<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-stj">TextView</span>
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>This is my content<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-stj">TextView</span>
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>This is my footer<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+  <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-stj">com.github.gfranks.expandable.view<span class="pl-k">.</span>ExpandableView</span><span class="pl-k">&gt;</span>
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Initialize by manually adding your header, content, and footer and using a fragment as your content</span>
+<span class="pl-c"> */</span>
+ <span class="pl-k">&lt;</span><span class="pl-stj">com.github.gfranks.expandable.view<span class="pl-k">.</span>ExpandableView</span>
+     android<span class="pl-k">:</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@+id/expandable_view<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_marginTop<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>10dp<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-stj">TextView</span>
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>This is my header<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-k">!</span><span class="pl-k">--</span> <span class="pl-stj">Using</span> a <span class="pl-stj">FrameLayout</span> so you can use the fragment manager to replace <span class="pl-v">this</span> with a fragment
+     <span class="pl-c1">NOTE</span><span class="pl-k">:</span> <span class="pl-stj">You</span> can also apply a fragment <span class="pl-k">for</span> your header and footer
+
+     <span class="pl-k">&lt;</span><span class="pl-stj">FrameLayout</span>
+         android<span class="pl-k">:</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@+id/expandable_view_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+     <span class="pl-c1">OR</span> specify your fragment directly <span class="pl-k">if</span> <span class="pl-c1">NOT</span> nested
+
+     <span class="pl-k">&lt;</span>fragment
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>name<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>com.path.to.fragment<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>tag<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>tag<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+     <span class="pl-k">--</span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-stj">TextView</span>
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>This is my footer<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+ <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-stj">com.github.gfranks.expandable.view<span class="pl-k">.</span>ExpandableView</span><span class="pl-k">&gt;</span>
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Initialize with separate layout files for your header, content, and/or footer and specifying your other views manually</span>
+<span class="pl-c"> */</span>
+ <span class="pl-k">&lt;</span><span class="pl-stj">com.github.gfranks.expandable.view<span class="pl-k">.</span>ExpandableView</span>
+     android<span class="pl-k">:</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@+id/expandable_view<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_marginTop<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>10dp<span class="pl-pds">"</span></span>
+     app<span class="pl-k">:</span>contentLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_content<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-stj">TextView</span>
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>This is my header<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-stj">TextView</span>
+         android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+         android<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>This is my footer<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+
+ <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-stj">com.github.gfranks.expandable.view<span class="pl-k">.</span>ExpandableView</span><span class="pl-k">&gt;</span>
+
+
+<span class="pl-c">// ExpandableListView Sample.</span>
+<span class="pl-c">// See Sample Module for additional customization as well an example.</span>
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Initialize and set whether to keep a single or all ExpandableViews expanded (keepViewsExpanded)</span>
+<span class="pl-c"> */</span>
+ <span class="pl-k">&lt;</span><span class="pl-stj">com.github.gfranks.expandable.view<span class="pl-k">.</span>ExpandableListView</span>
+     android<span class="pl-k">:</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@+id/expandable_list_view<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+     android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+     app<span class="pl-k">:</span>keepViewsExpanded<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+     <span class="pl-k">&lt;</span><span class="pl-k">!</span><span class="pl-k">--</span> <span class="pl-stj">Setting</span> <span class="pl-v">this</span> value (keepViewsExpanded) to <span class="pl-c1">true</span> will allow the list to keep all expandable views, expanded.
+          <span class="pl-stj">Setting</span> to <span class="pl-c1">false</span> will only allow <span class="pl-c1">1</span> to be expanded <span class="pl-k">--</span><span class="pl-k">&gt;</span>
+
+     <span class="pl-k">&lt;</span><span class="pl-k">!</span><span class="pl-k">--</span> <span class="pl-stj">Be</span> sure to include an <span class="pl-stj">ExpandableView</span> in your list view layouts (and set isCollapsed <span class="pl-k">for</span> all views to be collapsed by <span class="pl-k">default</span>, <span class="pl-k">if</span> you desire.
+          <span class="pl-stj">Any</span> <span class="pl-stj">Adapter</span>, custom or not, will work. <span class="pl-stj">You</span> can still use <span class="pl-v">this</span> list view without any expandable views, however, what would be the point
+          <span class="pl-c1">NOTE</span><span class="pl-k">:</span> <span class="pl-stj">Please</span> <span class="pl-k">do</span> not set an <span class="pl-stj">ExpandableViewListener</span> on your <span class="pl-stj">ExpandableViews</span>, <span class="pl-v">this</span> will <span class="pl-k">break</span> functionality. <span class="pl-stj">Instead</span>, set it on the <span class="pl-stj">ExpandableListView</span>
+          using <span class="pl-stj">ExpandableListView</span><span class="pl-k">.</span>setExpandableViewListener(<span class="pl-stj">ExpandableView</span><span class="pl-k">.</span><span class="pl-stj">ExpandableViewListener</span> listener) <span class="pl-k">--</span><span class="pl-k">&gt;</span></pre></div>
+
+<h2>
+<a id="customization" class="anchor" href="#customization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customization:</h2>
+
+<h3>
+<a id="expandableview-1" class="anchor" href="#expandableview-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>ExpandableView</h3>
+
+<ul>
+<li>
+<code>isCollapsed</code> Boolean determining if ExpandableView should be collapsed by default</li>
+<li>
+<code>collapseOnContentClick</code> Boolean determining if ExpandableView can be collapsed/expanded when the content view is clicked</li>
+<li>
+<code>animationDuration</code> Int specifying your desired animation duration (default is 200ms)</li>
+<li>
+<code>headerLayout</code> Layout resource you wish to use as your header view</li>
+<li>
+<code>contentLayout</code> Layout resource you wish to use as your content view</li>
+<li>
+<code>footerLayout</code> Layout resource you wish to use as your footer view (Optional)</li>
+<li>
+<code>disableExpandCollapseOnClick</code> Boolean disabling collapse/expandsion when any view is clicked (should you wish to handle this on your own)</li>
+<li>
+<code>addOverlayWhenCollapsed</code> Boolean determining if you would like to add a gradient overlay over your content when collapsed (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)</li>
+<li>
+<code>gradientOverlayColor</code> Color of the gradient overlay used to overlay the content view when collapsed (Gradient goes from <code>Color.TRANSPARENT</code> to this color, defaults to <code>Color.WHITE</code>)</li>
+<li>
+<code>customContentOverlay</code> View to be used as a custom content overlay. This will override the gradient overlay if a gradient overlay color is set and no alpha change will be applied to this. You can handle the alpha change if you'd like in the <code>onHeightOffsetChanged(...)</code> callback. (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)</li>
+<li>
+<code>collapsedContentHeight</code> Dimension used as the collapsed content height (Defaults to 0)</li>
+</ul>
+
+<h3>
+<a id="expandablelistview" class="anchor" href="#expandablelistview" aria-hidden="true"><span class="octicon octicon-link"></span></a>ExpandableListView</h3>
+
+<ul>
+<li>
+<code>keepViewsExpanded</code> Boolean determining if the ExpandableListView can have multiple expandable views, expanded. If false, only 1 will be allowed to be expanded.</li>
+</ul>
+
+<h2>
+<a id="callback-methods" class="anchor" href="#callback-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Callback Methods:</h2>
+
+<pre><code>/**
+ * ExpandableViewListener
+ */
+boolean canExpand(ExpandableView expandableView);
+boolean canCollapse(ExpandableView expandableView);
+void willExpand(ExpandableView expandableView);
+void willCollapse(ExpandableView expandableView);
+void didExpand(ExpandableView expandableView);
+void didCollapse(ExpandableView expandableView);
+void onHeightOffsetChanged(ExpandableView expandableView, float offset);
+</code></pre>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation:</h2>
+
+<h3>
+<a id="directly-include-source-into-your-projects" class="anchor" href="#directly-include-source-into-your-projects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directly include source into your projects</h3>
+
+<ul>
+<li>Simply copy the source/resource files from the library folder into your project.</li>
+</ul>
+
+<h3>
+<a id="use-binary-approach" class="anchor" href="#use-binary-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use binary approach</h3>
+
+<ul>
+<li>
+<p>Follow these steps to include aar binary in your project:</p>
+
+<p>1: Copy com.github.gfranks.expandable.view-1.2.aar into your projects libs/ directory.</p>
+
+<p>2: Include the following either in your top level build.gradle file or your module specific one:</p>
+
+<pre><code>  repositories {
+     flatDir {
+         dirs 'libs'
+     }
+ }
+</code></pre>
+
+<p>3: Under your dependencies for your main module's build.gradle file, you can reference that aar file like so:
+<code>compile 'com.github.gfranks.expandable.view:com.github.gfranks.expandable.view-1.2@aar'</code></p>
+</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright (c) 2015 Garrett Franks. All rights reserved.</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/gfranks">gfranks</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
