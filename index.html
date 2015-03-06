@@ -62,9 +62,9 @@ See below for usage and examples. If you have any questions, issues, or want to 
      android<span class="pl-k">:</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@+id/expandable_view<span class="pl-pds">"</span></span>
      android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
      android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
-     app<span class="pl-k">:</span>headerLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_header<span class="pl-pds">"</span></span>
-     app<span class="pl-k">:</span>contentLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_content<span class="pl-pds">"</span></span>
-     app<span class="pl-k">:</span>footerLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_footer<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+     app<span class="pl-k">:</span>ev_headerLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_header<span class="pl-pds">"</span></span>
+     app<span class="pl-k">:</span>ev_contentLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_content<span class="pl-pds">"</span></span>
+     app<span class="pl-k">:</span>ev_footerLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_footer<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
 
 <span class="pl-c">/**</span>
 <span class="pl-c"> * Initialize by manually adding your header, content, and footer</span>
@@ -138,7 +138,7 @@ See below for usage and examples. If you have any questions, issues, or want to 
      android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
      android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
      android<span class="pl-k">:</span>layout_marginTop<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>10dp<span class="pl-pds">"</span></span>
-     app<span class="pl-k">:</span>contentLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_content<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+     app<span class="pl-k">:</span>ev_contentLayout<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@layout/layout_expandable_view_content<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
 
      <span class="pl-k">&lt;</span><span class="pl-stj">TextView</span>
          android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
@@ -163,7 +163,7 @@ See below for usage and examples. If you have any questions, issues, or want to 
      android<span class="pl-k">:</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>@+id/expandable_list_view<span class="pl-pds">"</span></span>
      android<span class="pl-k">:</span>layout_width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
      android<span class="pl-k">:</span>layout_height<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
-     app<span class="pl-k">:</span>keepViewsExpanded<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+     app<span class="pl-k">:</span>ev_keepViewsExpanded<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span> <span class="pl-k">/</span><span class="pl-k">&gt;</span>
      <span class="pl-k">&lt;</span><span class="pl-k">!</span><span class="pl-k">--</span> <span class="pl-stj">Setting</span> <span class="pl-v">this</span> value (keepViewsExpanded) to <span class="pl-c1">true</span> will allow the list to keep all expandable views, expanded.
           <span class="pl-stj">Setting</span> to <span class="pl-c1">false</span> will only allow <span class="pl-c1">1</span> to be expanded <span class="pl-k">--</span><span class="pl-k">&gt;</span>
 
@@ -180,27 +180,27 @@ See below for usage and examples. If you have any questions, issues, or want to 
 
 <ul>
 <li>
-<code>isCollapsed</code> Boolean determining if ExpandableView should be collapsed by default</li>
+<code>ev_isCollapsed</code> Boolean determining if ExpandableView should be collapsed by default</li>
 <li>
-<code>collapseOnContentClick</code> Boolean determining if ExpandableView can be collapsed/expanded when the content view is clicked</li>
+<code>ev_collapseOnContentClick</code> Boolean determining if ExpandableView can be collapsed/expanded when the content view is clicked</li>
 <li>
-<code>animationDuration</code> Int specifying your desired animation duration (default is 200ms)</li>
+<code>ev_animationDuration</code> Int specifying your desired animation duration (default is 200ms)</li>
 <li>
-<code>headerLayout</code> Layout resource you wish to use as your header view</li>
+<code>ev_headerLayout</code> Layout resource you wish to use as your header view</li>
 <li>
-<code>contentLayout</code> Layout resource you wish to use as your content view</li>
+<code>ev_contentLayout</code> Layout resource you wish to use as your content view</li>
 <li>
-<code>footerLayout</code> Layout resource you wish to use as your footer view (Optional)</li>
+<code>ev_footerLayout</code> Layout resource you wish to use as your footer view (Optional)</li>
 <li>
-<code>disableExpandCollapseOnClick</code> Boolean disabling collapse/expandsion when any view is clicked (should you wish to handle this on your own)</li>
+<code>ev_disableExpandCollapseOnClick</code> Boolean disabling collapse/expandsion when any view is clicked (should you wish to handle this on your own)</li>
 <li>
-<code>addOverlayWhenCollapsed</code> Boolean determining if you would like to add a gradient overlay over your content when collapsed (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)</li>
+<code>ev_addOverlayWhenCollapsed</code> Boolean determining if you would like to add a gradient overlay over your content when collapsed (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)</li>
 <li>
-<code>gradientOverlayColor</code> Color of the gradient overlay used to overlay the content view when collapsed (Gradient goes from <code>Color.TRANSPARENT</code> to this color, defaults to <code>Color.WHITE</code>)</li>
+<code>ev_gradientOverlayColor</code> Color of the gradient overlay used to overlay the content view when collapsed (Gradient goes from <code>Color.TRANSPARENT</code> to this color, defaults to <code>Color.WHITE</code>)</li>
 <li>
-<code>customContentOverlay</code> View to be used as a custom content overlay. This will override the gradient overlay if a gradient overlay color is set and no alpha change will be applied to this. You can handle the alpha change if you'd like in the <code>onHeightOffsetChanged(...)</code> callback. (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)</li>
+<code>ev_customContentOverlay</code> View to be used as a custom content overlay. This will override the gradient overlay if a gradient overlay color is set and no alpha change will be applied to this. You can handle the alpha change if you'd like in the <code>onHeightOffsetChanged(...)</code> callback. (Be sure to specify a collapsedContentHeight greater than 0 or this will not be applied)</li>
 <li>
-<code>collapsedContentHeight</code> Dimension used as the collapsed content height (Defaults to 0)</li>
+<code>ev_collapsedContentHeight</code> Dimension used as the collapsed content height (Defaults to 0)</li>
 </ul>
 
 <h3>
@@ -208,7 +208,7 @@ See below for usage and examples. If you have any questions, issues, or want to 
 
 <ul>
 <li>
-<code>keepViewsExpanded</code> Boolean determining if the ExpandableListView can have multiple expandable views, expanded. If false, only 1 will be allowed to be expanded.</li>
+<code>ev_keepViewsExpanded</code> Boolean determining if the ExpandableListView can have multiple expandable views, expanded. If false, only 1 will be allowed to be expanded.</li>
 </ul>
 
 <h2>
